@@ -1,0 +1,23 @@
+<h1> {{author.first_name}} {{author.last_name}}</h1>
+<h3> ID: {{author.id}}</h3>
+<h3> Description:{{author.notes}}</h3>
+
+<h3> Books:</h3> 
+
+{% for book in assigned_books %}
+    <p>{{ book.title }}</p>
+{% endfor %}
+
+<!-- This part displays a dropdown list that has all AUTHORS in the database-->
+<h3>Assign Book to Author</h3>
+<form action="{% url 'assign_book_to_author' author_id=author.id %}" method="post">
+  {% csrf_token %}
+  <label>Book:</label>
+  <select name="book">
+    {% for book in all_books %}
+    <option value="{{book.pk}}">{{ book.title}}</option>    
+    {% endfor %}
+  </select>
+  
+  <button type="submit">Add Book</button>
+</form>
